@@ -12,15 +12,15 @@
       <section class="brand">
         <div class="sigil">WT</div>
         <div>
-          <h1>WorldTree Camp</h1>
-          <p>Gather first. Build fast.</p>
+          <h1>월드트리 캠프</h1>
+          <p>먼저 모이고, 빠르게 고친다.</p>
         </div>
       </section>
 
       <section class="identity">
-        <label for="operatorName">Name</label>
+        <label for="operatorName">이름</label>
         <input id="operatorName" value="Daejang" maxlength="24">
-        <label for="operatorRole">Role</label>
+        <label for="operatorRole">역할</label>
         <select id="operatorRole">
           <option>Daejang</option>
           <option>Central</option>
@@ -45,9 +45,9 @@
       </nav>
 
       <section class="tools">
-        <button id="insertTemplate" type="button">Report Form</button>
-        <button id="refreshNow" type="button">Refresh</button>
-        <button id="exportLog" type="button">Export Local Log</button>
+        <button id="insertTemplate" type="button">보고 양식</button>
+        <button id="refreshNow" type="button">새로고침</button>
+        <button id="exportLog" type="button">로그 저장</button>
       </section>
     </aside>
 
@@ -58,14 +58,14 @@
           <p id="channelDesc">WorldTree first gathering camp.</p>
         </div>
         <div class="status">
-          <span id="backendState">Starting</span>
+          <span id="backendState">시작 중</span>
           <span id="clock"></span>
         </div>
       </header>
 
       <section class="notice">
-        <strong>Rule</strong>
-        <span>No service role key. No real secret token. Camp first, polish later.</span>
+        <strong>규칙</strong>
+        <span>비밀키 금지. 토큰 금지. 먼저 모이고 나중에 다듬는다.</span>
       </section>
 
       <section id="messages" class="messages" aria-live="polite"></section>
@@ -78,9 +78,10 @@
           <label><input type="radio" name="tag" value="missing"> missing</label>
           <label><input type="radio" name="tag" value="command"> command</label>
         </div>
-        <textarea id="messageInput" placeholder="Write a WorldTree report or command. Do not paste secrets." required></textarea>
+        <textarea id="messageInput" placeholder="메시지 입력. Enter 전송 / Shift+Enter 줄바꿈. 비밀키 금지." required rows="2"></textarea>
         <div class="composerActions">
-          <button type="submit">Send</button>
+          <span class="sendHint">Enter 전송 / Shift+Enter 줄바꿈</span>
+          <button type="submit">보내기</button>
         </div>
       </form>
     </section>
