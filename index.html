@@ -10,17 +10,18 @@
   <main class="app">
     <aside class="sidebar">
       <section class="brand">
-        <div class="sigil">WT</div>
+        <div class="sigil" aria-hidden="true"><span></span></div>
         <div>
-          <h1>월드트리 캠프</h1>
-          <p>먼저 모이고, 빠르게 고친다.</p>
+          <p class="eyebrow">WORLDTREE HQ</p>
+          <h1>&#50900;&#46300;&#53944;&#47532; &#52896;&#54532;</h1>
+          <p>&#51665;&#44208;, &#48373;&#44396;, &#52636;&#44201;.</p>
         </div>
       </section>
 
-      <section class="identity">
-        <label for="operatorName">이름</label>
+      <section class="identity panel">
+        <label for="operatorName">&#51060;&#47492;</label>
         <input id="operatorName" value="Daejang" maxlength="24">
-        <label for="operatorRole">역할</label>
+        <label for="operatorRole">&#50669;&#54624;</label>
         <select id="operatorRole">
           <option>Daejang</option>
           <option>Central</option>
@@ -33,55 +34,64 @@
         </select>
       </section>
 
-      <nav class="channels" aria-label="Channels">
-        <button class="channel active" data-channel="camp"># camp</button>
-        <button class="channel" data-channel="central"># central</button>
-        <button class="channel" data-channel="command"># command</button>
-        <button class="channel" data-channel="hud"># hud</button>
-        <button class="channel" data-channel="api"># api</button>
-        <button class="channel" data-channel="sl"># second-life</button>
-        <button class="channel" data-channel="qa"># qa</button>
-        <button class="channel" data-channel="urgent"># urgent</button>
+      <nav class="channels panel" aria-label="channels">
+        <button class="channel active" data-channel="camp">&#52896;&#54532;</button>
+        <button class="channel" data-channel="central">&#51473;&#50521;</button>
+        <button class="channel" data-channel="command">&#47749;&#47161;</button>
+        <button class="channel" data-channel="hud">HUD</button>
+        <button class="channel" data-channel="api">API</button>
+        <button class="channel" data-channel="sl">&#49464;&#52968;&#46300;&#46972;&#51060;&#54532;</button>
+        <button class="channel" data-channel="qa">QA</button>
+        <button class="channel urgent" data-channel="urgent">&#44596;&#44553;</button>
       </nav>
 
-      <section class="tools">
-        <button id="insertTemplate" type="button">보고 양식</button>
-        <button id="refreshNow" type="button">새로고침</button>
-        <button id="exportLog" type="button">로그 저장</button>
+      <section class="tools panel">
+        <button id="insertTemplate" type="button">&#48372;&#44256; &#50577;&#49885;</button>
+        <button id="refreshNow" type="button">&#49352;&#47196;&#44256;&#52840;</button>
+        <button id="exportLog" type="button">&#47196;&#44536; &#51200;&#51109;</button>
+      </section>
+
+      <section class="roster panel">
+        <div class="panelTitle">
+          <span>&#51217;&#49549;&#51088;</span>
+          <strong id="onlineCount">0</strong>
+        </div>
+        <div id="onlineUsers" class="onlineUsers"></div>
       </section>
     </aside>
 
     <section class="workspace">
       <header class="topbar">
         <div>
+          <p class="eyebrow">WORLD TREE SIGNAL</p>
           <h2 id="channelTitle"># camp</h2>
-          <p id="channelDesc">WorldTree first gathering camp.</p>
+          <p id="channelDesc">&#50900;&#46300;&#53944;&#47532; &#52395; &#51665;&#44208;&#51648;.</p>
         </div>
         <div class="status">
-          <span id="backendState">시작 중</span>
+          <span id="backendState">&#49884;&#51089; &#51473;</span>
           <span id="clock"></span>
         </div>
       </header>
 
       <section class="notice">
-        <strong>규칙</strong>
-        <span>비밀키 금지. 토큰 금지. 먼저 모이고 나중에 다듬는다.</span>
+        <strong>&#44508;&#52825;</strong>
+        <span>&#48708;&#48128;&#53412; &#44552;&#51648;. &#53664;&#53360; &#44552;&#51648;. &#47676;&#51200; &#47784;&#51060;&#44256;, &#48736;&#47476;&#44172; &#44256;&#52828;&#45796;.</span>
       </section>
 
       <section id="messages" class="messages" aria-live="polite"></section>
 
       <form id="composer" class="composer">
-        <div class="tags">
-          <label><input type="radio" name="tag" value="done"> done</label>
-          <label><input type="radio" name="tag" value="candidate" checked> candidate</label>
-          <label><input type="radio" name="tag" value="risk"> risk</label>
-          <label><input type="radio" name="tag" value="missing"> missing</label>
-          <label><input type="radio" name="tag" value="command"> command</label>
+        <div class="tags" aria-label="message state">
+          <label><input type="radio" name="tag" value="done"> &#50756;&#47308;</label>
+          <label><input type="radio" name="tag" value="candidate" checked> &#54980;&#48372;</label>
+          <label><input type="radio" name="tag" value="risk"> &#50948;&#54744;</label>
+          <label><input type="radio" name="tag" value="missing"> &#45572;&#46973;</label>
+          <label><input type="radio" name="tag" value="command"> &#47749;&#47161;</label>
         </div>
-        <textarea id="messageInput" placeholder="메시지 입력. Enter 전송 / Shift+Enter 줄바꿈. 비밀키 금지." required rows="2"></textarea>
+        <textarea id="messageInput" placeholder="&#47700;&#49884;&#51648; &#51077;&#47141;. Enter &#51204;&#49569; / Shift+Enter &#51460;&#48148;&#45000;. &#48708;&#48128;&#53412; &#44552;&#51648;." required rows="2"></textarea>
         <div class="composerActions">
-          <span class="sendHint">Enter 전송 / Shift+Enter 줄바꿈</span>
-          <button type="submit">보내기</button>
+          <span class="sendHint">Enter &#51204;&#49569; / Shift+Enter &#51460;&#48148;&#45000;</span>
+          <button type="submit">&#48372;&#45236;&#44592;</button>
         </div>
       </form>
     </section>
