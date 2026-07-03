@@ -258,6 +258,12 @@ els.composer.addEventListener("submit", async (event) => {
   }
 });
 
+els.messageInput.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
+  event.preventDefault();
+  els.composer.requestSubmit();
+});
+
 els.insertTemplate.addEventListener("click", () => {
   els.messageInput.value = reportTemplate();
   els.messageInput.focus();
