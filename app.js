@@ -13,14 +13,22 @@ const supabaseTable = config.supabaseTable || "worldtree_chat_messages";
 const localKey = "worldtree-camp-chat-local-v1";
 
 const channels = {
-  camp: ["# camp", "WorldTree first gathering camp."],
-  central: ["# central", "Central command and decisions."],
-  command: ["# command", "Orders and priorities."],
-  hud: ["# hud", "Second Life HUD restore and chat HUD."],
-  api: ["# api", "Supabase, Edge Function, Apps Script, security."],
-  sl: ["# second-life", "In-world HUD, kiosk, object work."],
-  qa: ["# qa", "Version audit, bugs, risks."],
-  urgent: ["# urgent", "Only blockers and emergency commands."]
+  camp: ["# camp", "월드트리 첫 집결지."],
+  central: ["# central", "중앙 판단과 최종 결정."],
+  command: ["# command", "명령, 우선순위, 지시문."],
+  hud: ["# hud", "세컨드라이프 HUD 복구와 채팅 HUD."],
+  api: ["# api", "Supabase, Edge Function, Apps Script, 보안."],
+  sl: ["# second-life", "인월드 HUD, 키오스크, 오브젝트 작업."],
+  qa: ["# qa", "버전 감사, 버그, 위험 확인."],
+  urgent: ["# urgent", "막힌 것과 긴급 명령만."]
+};
+
+const tagLabels = {
+  done: "완료",
+  candidate: "후보",
+  risk: "위험",
+  missing: "누락",
+  command: "명령"
 };
 
 const seedMessages = [
@@ -30,7 +38,7 @@ const seedMessages = [
     name: "Daejang",
     role: "Central",
     tag: "command",
-    body: "WorldTree Camp is open. Gather first. Do not paste secrets.",
+    body: "월드트리 캠프 개방. 먼저 모인다. 비밀키는 절대 붙여넣지 않는다.",
     createdAt: new Date().toISOString()
   }
 ];
@@ -50,7 +58,9 @@ const els = {
   refreshNow: document.getElementById("refreshNow"),
   exportLog: document.getElementById("exportLog"),
   backendState: document.getElementById("backendState"),
-  clock: document.getElementById("clock")
+  clock: document.getElementById("clock"),
+  onlineCount: document.getElementById("onlineCount"),
+  onlineUsers: document.getElementById("onlineUsers")
 };
 
 function loadLocal() {
@@ -94,22 +104,63 @@ function formatTime(value) {
 
 function reportTemplate() {
   return [
-    "role:",
+    "담당 역할:",
     "",
-    "done:",
+    "완료:",
     "",
-    "candidate:",
+    "후보:",
     "",
-    "risk:",
+    "위험:",
     "",
-    "missing:",
+    "누락:",
     "",
-    "next:",
+    "다음 작업:",
     "",
-    "note:",
-    "- WorldTree only",
-    "- no secrets"
+    "주의사항:",
+    "- WorldTree만 작업",
+    "- 비밀키 금지"
   ].join("\n");
+}
+
+function getOnlineUsers(messages) {
+  const users = new Map();
+  messages.forEach((message) => {
+    const key = `${message.name || "unknown"}-${message.role || "unknown"}`;
+    users.set(key, {
+      name: message.name || "unknown",
+      role: message.role || "unknown",
+      tag: message.tag || "candidate",
+      createdAt: message.createdAt || new Date(0).toISOString()
+    });
+  });
+
+  const selfName = els.operatorName.value.trim() || "unknown";
+  const selfRole = els.operatorRole.value || "unknown";
+  users.set(`${selfName}-${selfRole}`, {
+    name: selfName,
+    role: selfRole,
+    tag: "done",
+    createdAt: new Date().toISOString()
+  });
+
+  return Array.from(users.values())
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 18);
+}
+
+function renderOnlineUsers(messages) {
+  if (!els.onlineUsers || !els.onlineCount) return;
+  const users = getOnlineUsers(messages);
+  els.onlineCount.textContent = String(users.length);
+  els.onlineUsers.innerHTML = users.map((user) => `
+    <div class="onlineUser">
+      <span class="onlineDot tag-${escapeHtml(user.tag)}"></span>
+      <span>
+        <span class="onlineName">${escapeHtml(user.name)}</span>
+        <span class="onlineRole">${escapeHtml(user.role)}</span>
+      </span>
+    </div>
+  `).join("");
 }
 
 function render() {
@@ -121,19 +172,25 @@ function render() {
     button.classList.toggle("active", button.dataset.channel === currentChannel);
   });
 
-  const messages = loadLocal().filter((message) => message.channel === currentChannel);
+  const allMessages = loadLocal();
+  const messages = allMessages.filter((message) => message.channel === currentChannel);
+  const shouldStickToBottom =
+    els.messages.scrollHeight - els.messages.scrollTop - els.messages.clientHeight < 90;
   els.messages.innerHTML = messages.map((message) => `
     <article class="message">
       <div class="messageHead">
         <span class="name">${escapeHtml(message.name)}</span>
         <span class="role">${escapeHtml(message.role)}</span>
-        <span class="tag tag-${escapeHtml(message.tag)}">${escapeHtml(message.tag)}</span>
+        <span class="tag tag-${escapeHtml(message.tag)}">${escapeHtml(tagLabels[message.tag] || message.tag)}</span>
         <span class="time">${formatTime(message.createdAt)}</span>
       </div>
       <div class="body">${escapeHtml(message.body)}</div>
     </article>
   `).join("");
-  els.messages.scrollTop = els.messages.scrollHeight;
+  renderOnlineUsers(allMessages);
+  if (shouldStickToBottom) {
+    els.messages.scrollTop = els.messages.scrollHeight;
+  }
 }
 
 function toSupabaseRow(message) {
