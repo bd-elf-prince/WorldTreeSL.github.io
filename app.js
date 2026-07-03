@@ -261,7 +261,7 @@ els.composer.addEventListener("submit", async (event) => {
 els.messageInput.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
   event.preventDefault();
-  els.composer.requestSubmit();
+  els.composer.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
 });
 
 els.insertTemplate.addEventListener("click", () => {
