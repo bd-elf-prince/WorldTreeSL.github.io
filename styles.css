@@ -15,7 +15,8 @@
 
 body {
   margin: 0;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, "Malgun Gothic", sans-serif;
@@ -24,7 +25,8 @@ body {
 .app {
   display: grid;
   grid-template-columns: 280px 1fr;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .sidebar {
@@ -34,6 +36,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-height: 0;
+  overflow: auto;
 }
 
 .brand {
@@ -96,8 +100,11 @@ button:hover, .channel.active {
 
 .workspace {
   min-width: 0;
+  min-height: 0;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .topbar {
@@ -138,10 +145,12 @@ button:hover, .channel.active {
 
 .messages {
   overflow: auto;
+  min-height: 0;
   padding: 18px 22px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  scroll-behavior: smooth;
 }
 
 .message {
@@ -179,10 +188,13 @@ button:hover, .channel.active {
 
 .composer {
   border-top: 1px solid var(--line);
-  padding: 14px 22px;
+  padding: 10px 22px 12px;
   background: #141914;
   display: grid;
-  gap: 10px;
+  gap: 8px;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
 }
 
 .tags {
@@ -199,10 +211,36 @@ button:hover, .channel.active {
 
 .tags input { width: auto; }
 textarea { min-height: 96px; resize: vertical; }
-.composerActions { display: flex; justify-content: flex-end; }
+textarea {
+  min-height: 52px;
+  max-height: 120px;
+  resize: none;
+}
+
+.composerActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.sendHint {
+  color: var(--muted);
+  font-size: 12px;
+}
 
 @media (max-width: 780px) {
-  .app { grid-template-columns: 1fr; }
+  body { overflow: auto; }
+  .app {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
   .sidebar { border-right: 0; border-bottom: 1px solid var(--line); }
+  .workspace {
+    height: calc(100vh - 260px);
+    min-height: 620px;
+  }
   .topbar { align-items: flex-start; flex-direction: column; }
 }
