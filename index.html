@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WorldTree Camp Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <aside class="sidebar">
+      <section class="brand">
+        <div class="sigil">WT</div>
+        <div>
+          <h1>WorldTree Camp</h1>
+          <p>Gather first. Build fast.</p>
+        </div>
+      </section>
+
+      <section class="identity">
+        <label for="operatorName">Name</label>
+        <input id="operatorName" value="Daejang" maxlength="24">
+        <label for="operatorRole">Role</label>
+        <select id="operatorRole">
+          <option>Daejang</option>
+          <option>Central</option>
+          <option>HUD</option>
+          <option>API</option>
+          <option>QA</option>
+          <option>Art</option>
+          <option>Fix</option>
+          <option>Baby</option>
+        </select>
+      </section>
+
+      <nav class="channels" aria-label="Channels">
+        <button class="channel active" data-channel="camp"># camp</button>
+        <button class="channel" data-channel="central"># central</button>
+        <button class="channel" data-channel="command"># command</button>
+        <button class="channel" data-channel="hud"># hud</button>
+        <button class="channel" data-channel="api"># api</button>
+        <button class="channel" data-channel="sl"># second-life</button>
+        <button class="channel" data-channel="qa"># qa</button>
+        <button class="channel" data-channel="urgent"># urgent</button>
+      </nav>
+
+      <section class="tools">
+        <button id="insertTemplate" type="button">Report Form</button>
+        <button id="refreshNow" type="button">Refresh</button>
+        <button id="exportLog" type="button">Export Local Log</button>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <h2 id="channelTitle"># camp</h2>
+          <p id="channelDesc">WorldTree first gathering camp.</p>
+        </div>
+        <div class="status">
+          <span id="backendState">Starting</span>
+          <span id="clock"></span>
+        </div>
+      </header>
+
+      <section class="notice">
+        <strong>Rule</strong>
+        <span>No service role key. No real secret token. Camp first, polish later.</span>
+      </section>
+
+      <section id="messages" class="messages" aria-live="polite"></section>
+
+      <form id="composer" class="composer">
+        <div class="tags">
+          <label><input type="radio" name="tag" value="done"> done</label>
+          <label><input type="radio" name="tag" value="candidate" checked> candidate</label>
+          <label><input type="radio" name="tag" value="risk"> risk</label>
+          <label><input type="radio" name="tag" value="missing"> missing</label>
+          <label><input type="radio" name="tag" value="command"> command</label>
+        </div>
+        <textarea id="messageInput" placeholder="Write a WorldTree report or command. Do not paste secrets." required></textarea>
+        <div class="composerActions">
+          <button type="submit">Send</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
