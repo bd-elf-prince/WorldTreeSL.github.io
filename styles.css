@@ -552,36 +552,238 @@ textarea {
 }
 
 @media (max-width: 860px) {
-  body { overflow: auto; }
+  body {
+    height: 100vh;
+    overflow: hidden;
+  }
 
   .app {
     grid-template-columns: 1fr;
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
+    grid-template-rows: 238px minmax(0, 1fr);
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .sidebar {
     border-right: 0;
     border-bottom: 3px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: start;
+    gap: 8px;
+    max-height: 238px;
+    overflow: auto;
+    padding: 8px;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+    min-height: 58px;
+    grid-template-columns: 46px 1fr;
+    padding: 6px;
+  }
+
+  .sigil {
+    width: 44px;
+    height: 44px;
+  }
+
+  .sigil::before {
+    left: 19px;
+    top: 8px;
+    width: 6px;
+    height: 28px;
+  }
+
+  .sigil::after {
+    left: 9px;
+    top: 10px;
+    width: 26px;
+    height: 23px;
+  }
+
+  h1 { font-size: 17px; }
+  h2 { font-size: 20px; }
+  p { font-size: 12px; }
+
+  .identity,
+  .tools,
+  .roster {
+    min-width: 0;
+    padding: 7px;
+  }
+
+  .channels {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .channel {
+    min-height: 32px;
+    padding: 5px 4px;
+    font-size: 12px;
+  }
+
+  .tools button {
+    min-height: 30px;
+    padding: 5px;
+    font-size: 12px;
+  }
+
+  .onlineUsers {
+    grid-template-columns: 1fr;
+    max-height: 78px;
+  }
+
+  .onlineUser {
+    min-height: 30px;
+    padding: 4px;
+  }
+
+  .onlineName {
+    max-width: 150px;
   }
 
   .workspace {
-    height: calc(100vh - 390px);
-    min-height: 600px;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    min-height: 78px;
+    padding: 10px 12px;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
   }
 
   .worldPreview {
-    width: 100%;
-    flex-basis: auto;
+    flex: 0 0 122px;
+    height: 54px;
+    border-width: 2px;
+  }
+
+  .pixelMoon {
+    right: 10px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .pixelTree.trunk {
+    left: 57px;
+    bottom: 10px;
+    width: 9px;
+    height: 25px;
+  }
+
+  .leafOne {
+    left: 42px;
+    bottom: 32px;
+    width: 40px;
+    height: 12px;
+  }
+
+  .leafTwo {
+    left: 48px;
+    bottom: 43px;
+    width: 28px;
+    height: 9px;
+  }
+
+  .pixelHero {
+    bottom: 10px;
+    width: 8px;
+    height: 15px;
+    box-shadow: 0 -5px 0 #ffe0b5, 0 15px 0 #17202a;
+  }
+
+  .heroOne { left: 22px; }
+  .heroTwo { left: 92px; }
+
+  .pixelCrystal {
+    bottom: 11px;
+    width: 7px;
+    height: 10px;
+  }
+
+  .crystalOne { left: 10px; }
+  .crystalTwo { right: 20px; }
+
+  .status {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .status span {
+    padding: 4px 5px;
+    font-size: 11px;
   }
 
   .missionStrip {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 6px 10px 0;
+    gap: 5px;
+  }
+
+  .missionStrip span {
+    padding: 5px 3px;
+    font-size: 11px;
+  }
+
+  .notice {
+    margin: 6px 10px 0;
+    padding: 7px 8px;
+    font-size: 12px;
+  }
+
+  .messages {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .message {
+    padding: 8px 9px;
+  }
+
+  .messageHead {
+    gap: 5px;
+    margin-bottom: 5px;
+  }
+
+  .body {
+    font-size: 14px;
+  }
+
+  .composer {
+    padding: 7px 10px 8px;
+    gap: 6px;
+  }
+
+  .tags {
+    gap: 5px;
+  }
+
+  .tags label {
+    padding: 4px 5px;
+    font-size: 12px;
+  }
+
+  textarea {
+    min-height: 42px;
+    max-height: 88px;
+  }
+
+  .composerActions button {
+    min-width: 86px;
+    min-height: 34px;
+  }
+
+  .sendHint {
+    font-size: 11px;
   }
 }
